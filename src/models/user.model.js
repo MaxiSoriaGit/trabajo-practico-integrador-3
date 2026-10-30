@@ -1,10 +1,10 @@
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose'; // 👈 Importamos 'model'
 
 const profileSchema = new Schema(
   {
     firstname: {
       type: String,
-      require: true,
+      required: true,
       trim: true,
       minlength: 2,
       maxlength: 50,
@@ -42,16 +42,17 @@ const userSchema = new Schema(
     },
     password: { type: String, required: true, select: false },
     role: { type: String, enum: ['user', 'Admin'], default: 'user' },
-    profile: { type: profileSchema, required: true }, // 1:1 embebido
-    deleteAt: { type: Date, default: null }, //Eliminacion logica
+    profile: profileSchema, //
+    deletedAt: { type: Date, default: null },
   },
   {
     timestamps: true,
-    versionKey: true,
+    versionKey: false,
     toJSON: {
       virtuals: true,
       transform: (doc, ret) => {
-        delete ret.password; // el hash nunca sale en un JSON
+        delete ret.password;
+        delete ret.id; // Evita duplicar '_id' y 'id' si querés mantener limpia la salida
         return ret;
       },
     },
