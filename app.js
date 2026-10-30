@@ -4,6 +4,7 @@ import express from 'express';
 import 'dotenv/config';
 import { startDB } from './src/config/database.js';
 import authRoutes from './src/routes/auth.routes.js';
+import categoryRoutes from './src/routes/category.routes.js';
 // import { userRoutes } from './src/routes/user.routes.js';
 // import { taskRoutes } from './src/routes/task.routes.js';
 
@@ -17,6 +18,7 @@ app.use(cors());
 
 //aca van las rutas
 app.use('/api/auth', authRoutes);
+app.use('/api/categories', categoryRoutes);
 // app.use('/api', taskRoutes);
 
 const startServer = async () => {

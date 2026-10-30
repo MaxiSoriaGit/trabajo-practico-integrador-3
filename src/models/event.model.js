@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+import { Schema, model } from 'mongoose';
 
 const locationSchema = new Schema(
   {
@@ -9,7 +9,7 @@ const locationSchema = new Schema(
       minlength: 3,
       maxlength: 100,
     },
-    addres: {
+    address: {
       type: String,
       required: true,
       trim: true,
@@ -29,7 +29,7 @@ const locationSchema = new Schema(
 
 const eventSchema = new Schema(
   {
-    tittle: {
+    title: {
       type: String,
       required: true,
       unique: true,
@@ -37,16 +37,16 @@ const eventSchema = new Schema(
       minlength: 3,
       maxlength: 150,
     },
-    description: { type: String, required: true, trim: true, minlenght: 20 },
-    startDate: { type: Date, required: true, trim: true },
-    endDate: { type: Date, required: true, trim: true },
+    description: { type: String, required: true, trim: true, minlength: 20 },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
     capacity: {
       type: Number,
       required: true,
       min: 1,
       validate: {
         validator: Number.isInteger,
-        message: 'La capacidad debe ser un numero entero',
+        message: 'La capacidad debe ser un número entero',
       },
     },
     price: { type: Number, min: 0, default: 0 },
@@ -55,8 +55,8 @@ const eventSchema = new Schema(
       enum: ['scheduled', 'cancelled', 'finished'],
       default: 'scheduled',
     },
-    location: { type: locationSchema, required: true }, // 1:1 emebebido
-    organizer: { type: Schema.Types.organizer, ref: 'User', required: true }, // 1:N
+    location: { type: locationSchema, required: true }, // 1:1 embebido
+    organizer: { type: Schema.Types.ObjectId, ref: 'User', required: true }, // 1:N
     categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }], // N:M
   },
   { timestamps: true, versionKey: false },
