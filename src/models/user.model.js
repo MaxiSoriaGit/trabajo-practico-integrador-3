@@ -1,15 +1,15 @@
-import { Schema, model } from 'mongoose'; // 👈 Importamos 'model'
+import { Schema, model } from 'mongoose';
 
 const profileSchema = new Schema(
   {
-    firstname: {
+    firstName: {
       type: String,
       required: true,
       trim: true,
       minlength: 2,
       maxlength: 50,
     },
-    lastname: {
+    lastName: {
       type: String,
       required: true,
       trim: true,

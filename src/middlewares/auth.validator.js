@@ -17,6 +17,7 @@ const nombreRules = (ruta, etiqueta, obligatorio) => {
 
 const profileOpcionales = [
   body('profile.birthDate')
+    .optional({ values: 'falsy' })
     .isISO8601()
     .withMessage('la fecha de nacimiento no es valida')
     .bail()
@@ -45,7 +46,7 @@ export const validarRegister = [
     .withMessage('El username solo puede tener letras y numeros')
     .bail()
     .custom(async (username) => {
-      const existe = await UserActivation.exists({ username });
+      const existe = await User.exists({ username });
       if (existe) throw new Error('Ese username ya esta en uso');
     }),
   body('email')
@@ -57,7 +58,7 @@ export const validarRegister = [
     .withMessage('El email no es valido')
     .bail()
     .custom(async (email) => {
-      const existe = await UserActivation.exists({ email });
+      const existe = await User.exists({ email });
       if (existe) throw new Error('Ya existe un usuario con ese email');
     }),
   body('password')
@@ -73,8 +74,8 @@ export const validarRegister = [
     .withMessage(
       'La contraseña debe tener minimo 8 caracteres, una mayuscula , una minuscula y un numero',
     ),
-  nombreRules('profile.firstaname', 'El nombre', true),
-  nombreRules('profile.lastname', 'El apellido', true),
+  nombreRules('profile.firstName', 'El nombre', true),
+  nombreRules('profile.lastName', 'El apellido', true),
   ...profileOpcionales,
 ];
 
