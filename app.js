@@ -6,6 +6,7 @@ import { startDB } from './src/config/database.js';
 import authRoutes from './src/routes/auth.routes.js';
 import categoryRoutes from './src/routes/category.routes.js';
 import userRoutes from './src/routes/user.routes.js';
+import eventRoutes from './src/routes/event.routes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3005;
@@ -19,6 +20,7 @@ app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/events', eventRoutes);
 
 const startServer = async () => {
   try {
